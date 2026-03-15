@@ -150,6 +150,7 @@
     <string name="field_chest">Chest</string>
     <string name="field_pant_length">Pant Length</string>
     <string name="field_pant_waist">Pant Waist</string>
+    <string name="google_client_id">YOUR_GOOGLE_CLIENT_ID_HERE</string>
 </resources>
 
     <!--<resources>-->

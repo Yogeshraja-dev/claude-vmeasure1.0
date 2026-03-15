@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+    <!-- Header -->
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/colorSurface"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="4dp"
+        android:paddingEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_back"
+            android:contentDescription="Back" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/title_details"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorOnSurface" />
+
+        <Button
+            android:id="@+id/btnEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:background="@drawable/bg_primary_button"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="@string/btn_edit"
+            android:textColor="@color/colorOnPrimary"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <!-- Scrollable body (same form fields as add_edit) -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollBody"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/footer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/label_customer_name" android:textSize="13sp"
+                android:textColor="@color/colorTextSecondary" android:layout_marginBottom="4dp"/>
+            <EditText android:id="@+id/etName"
+                android:layout_width="match_parent" android:layout_height="48dp"
+                android:background="@drawable/bg_input_field"
+                android:hint="@string/hint_customer_name"
+                android:inputType="textPersonName|textCapWords"
+                android:paddingStart="12dp" android:paddingEnd="12dp" android:textSize="15sp"
+                android:enabled="false"/>
+            <TextView android:id="@+id/tvNameError"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:textColor="@color/colorError" android:textSize="12sp"
+                android:visibility="gone" android:layout_marginTop="4dp"/>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:layout_marginTop="12dp">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/label_dob" android:textSize="13sp"
+                        android:textColor="@color/colorTextSecondary" android:layout_marginBottom="4dp"/>
+                    <EditText android:id="@+id/etDob"
+                        android:layout_width="match_parent" android:layout_height="48dp"
+                        android:background="@drawable/bg_input_field"
+                        android:hint="@string/hint_date" android:focusable="false"
+                        android:clickable="true" android:paddingStart="12dp"
+                        android:paddingEnd="12dp" android:textSize="14sp" android:enabled="false"/>
+                </LinearLayout>
+                <Space android:layout_width="8dp" android:layout_height="1dp"/>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/label_special_date" android:textSize="13sp"
+                        android:textColor="@color/colorTextSecondary" android:layout_marginBottom="4dp"/>
+                    <EditText android:id="@+id/etSpecialDate"
+                        android:layout_width="match_parent" android:layout_height="48dp"
+                        android:background="@drawable/bg_input_field"
+                        android:hint="@string/hint_date" android:focusable="false"
+                        android:clickable="true" android:paddingStart="12dp"
+                        android:paddingEnd="12dp" android:textSize="14sp" android:enabled="false"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:layout_marginTop="12dp">
+                <LinearLayout android:layout_width="0dp" android:layout_height="52dp"
+                    android:layout_weight="1" android:background="@drawable/bg_input_field"
+                    android:gravity="center_vertical" android:orientation="horizontal"
+                    android:paddingStart="12dp" android:paddingEnd="12dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:text="@string/label_favourite" android:textSize="14sp"/>
+                    <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchFavourite"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:enabled="false"/>
+                </LinearLayout>
+                <Space android:layout_width="8dp" android:layout_height="1dp"/>
+                <LinearLayout android:layout_width="0dp" android:layout_height="52dp"
+                    android:layout_weight="1" android:background="@drawable/bg_input_field"
+                    android:gravity="center_vertical" android:orientation="horizontal"
+                    android:paddingStart="12dp" android:paddingEnd="12dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:text="@string/label_pin" android:textSize="14sp"/>
+                    <androidx.appcompat.widget.SwitchCompat android:id="@+id/switchPin"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:enabled="false"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/label_contact" android:textSize="13sp"
+                android:textColor="@color/colorTextSecondary"
+                android:layout_marginTop="12dp" android:layout_marginBottom="4dp"/>
+            <EditText android:id="@+id/etContact"
+                android:layout_width="match_parent" android:layout_height="48dp"
+                android:background="@drawable/bg_input_field"
+                android:hint="@string/hint_contact" android:inputType="phone"
+                android:paddingStart="12dp" android:paddingEnd="12dp" android:textSize="15sp"
+                android:enabled="false"/>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:layout_marginTop="12dp">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/label_instagram" android:textSize="13sp"
+                        android:textColor="@color/colorTextSecondary" android:layout_marginBottom="4dp"/>
+                    <EditText android:id="@+id/etInstagram"
+                        android:layout_width="match_parent" android:layout_height="48dp"
+                        android:background="@drawable/bg_input_field"
+                        android:hint="@string/hint_instagram"
+                        android:paddingStart="12dp" android:paddingEnd="12dp" android:textSize="14sp"
+                        android:enabled="false"/>
+                </LinearLayout>
+                <Space android:layout_width="8dp" android:layout_height="1dp"/>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="@string/label_other_media" android:textSize="13sp"
+                        android:textColor="@color/colorTextSecondary" android:layout_marginBottom="4dp"/>
+                    <EditText android:id="@+id/etOtherMedia"
+                        android:layout_width="match_parent" android:layout_height="48dp"
+                        android:background="@drawable/bg_input_field"
+                        android:hint="@string/hint_other_media"
+                        android:paddingStart="12dp" android:paddingEnd="12dp" android:textSize="14sp"
+                        android:enabled="false"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/label_location" android:textSize="13sp"
+                android:textColor="@color/colorTextSecondary"
+                android:layout_marginTop="12dp" android:layout_marginBottom="4dp"/>
+            <EditText android:id="@+id/etLocation"
+                android:layout_width="match_parent" android:layout_height="80dp"
+                android:background="@drawable/bg_input_field"
+                android:hint="@string/hint_location" android:gravity="top|start"
+                android:inputType="textMultiLine" android:padding="12dp" android:textSize="14sp"
+                android:enabled="false"/>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/label_measurements" android:textSize="16sp"
+                android:textStyle="bold" android:textColor="@color/colorOnSurface"
+                android:layout_marginTop="20dp" android:layout_marginBottom="12dp"/>
+
+            <HorizontalScrollView android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:scrollbars="none">
+                <LinearLayout android:id="@+id/tagChipsContainer"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:orientation="horizontal"/>
+            </HorizontalScrollView>
+
+            <LinearLayout android:id="@+id/sectionsContainer"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="vertical" android:layout_marginTop="4dp"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Footer (hidden in view mode, visible in edit mode) -->
+    <LinearLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorSurface"
+        android:elevation="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_input_field"
+            android:text="@string/btn_cancel"
+            android:textColor="@color/colorOnSurface"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_primary_button"
+            android:text="@string/btn_save"
+            android:textColor="@color/colorOnPrimary"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

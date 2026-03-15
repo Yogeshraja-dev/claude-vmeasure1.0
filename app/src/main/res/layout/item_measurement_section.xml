@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="12dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="@color/colorSurface">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Section header: title + timestamps + 3-dot menu -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="12dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvSectionType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorOnSurface"
+                    android:text="Blouse" />
+
+                <TextView
+                    android:id="@+id/tvTimestamps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11sp"
+                    android:textColor="@color/colorTextSecondary"
+                    android:visibility="gone"
+                    android:layout_marginTop="2dp"
+                    android:text="" />
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/btnSectionMenu"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_more_vert"
+                android:contentDescription="Section menu" />
+        </LinearLayout>
+
+        <!-- ── Row: U.Bust + Bust ── -->
+        <LinearLayout android:id="@+id/rowUBustBust"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginBottom="8dp">
+            <LinearLayout android:id="@+id/containerUBust"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="U.Bust" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+                <EditText android:id="@+id/etUBust"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+                    android:hint="0" android:inputType="numberDecimal"
+                    android:paddingStart="10dp" android:paddingEnd="10dp" android:textSize="14sp"/>
+            </LinearLayout>
+            <Space android:layout_width="8dp" android:layout_height="1dp"/>
+            <LinearLayout android:id="@+id/containerBust"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Bust" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+                <EditText android:id="@+id/etBust"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+                    android:hint="0" android:inputType="numberDecimal"
+                    android:paddingStart="10dp" android:paddingEnd="10dp" android:textSize="14sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ── Row: Waist + Hip ── -->
+        <LinearLayout android:id="@+id/rowWaistHip"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginBottom="8dp">
+            <LinearLayout android:id="@+id/containerWaist"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Waist" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+                <EditText android:id="@+id/etWaist"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+                    android:hint="0" android:inputType="numberDecimal"
+                    android:paddingStart="10dp" android:paddingEnd="10dp" android:textSize="14sp"/>
+            </LinearLayout>
+            <Space android:layout_width="8dp" android:layout_height="1dp"/>
+            <LinearLayout android:id="@+id/containerHip"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Hip" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+                <EditText android:id="@+id/etHip"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+                    android:hint="0" android:inputType="numberDecimal"
+                    android:paddingStart="10dp" android:paddingEnd="10dp" android:textSize="14sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ── Row: Armhole + Shoulder ── -->
+        <LinearLayout android:id="@+id/rowArmholeShoulder"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginBottom="8dp">
+            <LinearLayout android:id="@+id/containerArmhole"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Armhole" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+                <EditText android:id="@+id/etArmhole"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+                    android:hint="0" android:inputType="numberDecimal"
+                    android:paddingStart="10dp" android:paddingEnd="10dp" android:textSize="14sp"/>
+            </LinearLayout>
+            <Space android:layout_width="8dp" android:layout_height="1dp"/>
+            <LinearLayout android:id="@+id/containerShoulder"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Shoulder" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+                <EditText android:id="@+id/etShoulder"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+                    android:hint="0" android:inputType="numberDecimal"
+                    android:paddingStart="10dp" android:paddingEnd="10dp" android:textSize="14sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ── Row: Length + F Neck ── -->
+        <LinearLayout android:id="@+id/rowLengthFNeck"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginBottom="8dp">
+            <LinearLayout android:id="@+id/containerLength"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Length" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+                <EditText android:id="@+id/etLength"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+                    android:hint="0" android:inputType="numberDecimal"
+                    android:paddingStart="10dp" android:paddingEnd="10dp" android:textSize="14sp"/>
+            </LinearLayout>
+            <Space android:layout_width="8dp" android:layout_height="1dp"/>
+            <LinearLayout android:id="@+id/containerFNeck"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="F Neck" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+                <EditText android:id="@+id/etFNeck"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+                    android:hint="0" android:inputType="numberDecimal"
+                    android:paddingStart="10dp" android:paddingEnd="10dp" android:textSize="14sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ── Row: B Neck + Sleeve Length ── -->
+        <LinearLayout android:id="@+id/rowBNeckSleeveLength"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginBottom="8dp">
+            <LinearLayout android:id="@+id/containerBNeck"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="B Neck" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+                <EditText android:id="@+id/etBNeck"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+                    android:hint="0" android:inputType="numberDecimal"
+                    android:paddingStart="10dp" android:paddingEnd="10dp" android:textSize="14sp"/>
+            </LinearLayout>
+            <Space android:layout_width="8dp" android:layout_height="1dp"/>
+            <LinearLayout android:id="@+id/containerSleeveLength"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Sleeve Length" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+                <EditText android:id="@+id/etSleeveLength"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+                    android:hint="0" android:inputType="numberDecimal"
+                    android:paddingStart="10dp" android:paddingEnd="10dp" android:textSize="14sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ── Row: Sleeve Round + Blouse Field (Kurti) ── -->
+        <LinearLayout android:id="@+id/rowSleeveRoundBlouseField"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginBottom="8dp">
+            <LinearLayout android:id="@+id/containerSleeveRound"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Sleeve Round" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+                <EditText android:id="@+id/etSleeveRound"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+                    android:hint="0" android:inputType="numberDecimal"
+                    android:paddingStart="10dp" android:paddingEnd="10dp" android:textSize="14sp"/>
+            </LinearLayout>
+            <Space android:layout_width="8dp" android:layout_height="1dp"/>
+            <LinearLayout android:id="@+id/containerBlouseField"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical"
+                android:visibility="gone">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Blouse" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+                <EditText android:id="@+id/etBlouseField"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+                    android:hint="0" android:inputType="numberDecimal"
+                    android:paddingStart="10dp" android:paddingEnd="10dp" android:textSize="14sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ── Row: Blouse Cut (Kurti only) ── -->
+        <LinearLayout android:id="@+id/rowBlouseCut"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:layout_marginBottom="8dp"
+            android:visibility="gone">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Blouse Cut" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+            <EditText android:id="@+id/etBlouseCut"
+                android:layout_width="match_parent" android:layout_height="40dp"
+                android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+                android:hint="0" android:inputType="numberDecimal"
+                android:paddingStart="10dp" android:paddingEnd="10dp" android:textSize="14sp"/>
+        </LinearLayout>
+
+        <!-- ── Row: Thigh Round + Knee Round (Pant) ── -->
+        <LinearLayout android:id="@+id/rowThighKnee"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginBottom="8dp"
+            android:visibility="gone">
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Thigh Round" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+                <EditText android:id="@+id/etThighRound"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+                    android:hint="0" android:inputType="numberDecimal"
+                    android:paddingStart="10dp" android:paddingEnd="10dp" android:textSize="14sp"/>
+            </LinearLayout>
+            <Space android:layout_width="8dp" android:layout_height="1dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Knee Round" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+                <EditText android:id="@+id/etKneeRound"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+                    android:hint="0" android:inputType="numberDecimal"
+                    android:paddingStart="10dp" android:paddingEnd="10dp" android:textSize="14sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ── Row: Bottom + Inseam (Pant) ── -->
+        <LinearLayout android:id="@+id/rowBottomInseam"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginBottom="8dp"
+            android:visibility="gone">
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Bottom" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+                <EditText android:id="@+id/etBottom"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+                    android:hint="0" android:inputType="numberDecimal"
+                    android:paddingStart="10dp" android:paddingEnd="10dp" android:textSize="14sp"/>
+            </LinearLayout>
+            <Space android:layout_width="8dp" android:layout_height="1dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Inseam" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+                <EditText android:id="@+id/etInseam"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+                    android:hint="0" android:inputType="numberDecimal"
+                    android:paddingStart="10dp" android:paddingEnd="10dp" android:textSize="14sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ── Row: Frock Length + Yoke Length (Frock) ── -->
+        <LinearLayout android:id="@+id/rowFrockYoke"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginBottom="8dp"
+            android:visibility="gone">
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Frock Length" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+                <EditText android:id="@+id/etFrockLength"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+                    android:hint="0" android:inputType="numberDecimal"
+                    android:paddingStart="10dp" android:paddingEnd="10dp" android:textSize="14sp"/>
+            </LinearLayout>
+            <Space android:layout_width="8dp" android:layout_height="1dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Yoke Length" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+                <EditText android:id="@+id/etYokeLength"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+                    android:hint="0" android:inputType="numberDecimal"
+                    android:paddingStart="10dp" android:paddingEnd="10dp" android:textSize="14sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ── Row: Blouse Waist + Blouse Length (Crop) ── -->
+        <LinearLayout android:id="@+id/rowBlouseWaistLength"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginBottom="8dp"
+            android:visibility="gone">
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Blouse Waist" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+                <EditText android:id="@+id/etBlouseWaist"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+                    android:hint="0" android:inputType="numberDecimal"
+                    android:paddingStart="10dp" android:paddingEnd="10dp" android:textSize="14sp"/>
+            </LinearLayout>
+            <Space android:layout_width="8dp" android:layout_height="1dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Blouse Length" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+                <EditText android:id="@+id/etBlouseLength"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+                    android:hint="0" android:inputType="numberDecimal"
+                    android:paddingStart="10dp" android:paddingEnd="10dp" android:textSize="14sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ── Row: Skirt Length + Waist Length (Crop) ── -->
+        <LinearLayout android:id="@+id/rowSkirtWaistLength"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginBottom="8dp"
+            android:visibility="gone">
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Skirt Length" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+                <EditText android:id="@+id/etSkirtLength"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+                    android:hint="0" android:inputType="numberDecimal"
+                    android:paddingStart="10dp" android:paddingEnd="10dp" android:textSize="14sp"/>
+            </LinearLayout>
+            <Space android:layout_width="8dp" android:layout_height="1dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Waist Length" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+                <EditText android:id="@+id/etWaistLength"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+                    android:hint="0" android:inputType="numberDecimal"
+                    android:paddingStart="10dp" android:paddingEnd="10dp" android:textSize="14sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ── Row: Chest + Pant Length (Kids Boy) ── -->
+        <LinearLayout android:id="@+id/rowChestPantLength"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginBottom="8dp"
+            android:visibility="gone">
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Chest" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+                <EditText android:id="@+id/etChest"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+                    android:hint="0" android:inputType="numberDecimal"
+                    android:paddingStart="10dp" android:paddingEnd="10dp" android:textSize="14sp"/>
+            </LinearLayout>
+            <Space android:layout_width="8dp" android:layout_height="1dp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Pant Length" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+                <EditText android:id="@+id/etPantLength"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+                    android:hint="0" android:inputType="numberDecimal"
+                    android:paddingStart="10dp" android:paddingEnd="10dp" android:textSize="14sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- ── Row: Pant Waist (Kids Boy) ── -->
+        <LinearLayout android:id="@+id/rowPantWaist"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:layout_marginBottom="8dp"
+            android:visibility="gone">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Pant Waist" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+            <EditText android:id="@+id/etPantWaist"
+                android:layout_width="match_parent" android:layout_height="40dp"
+                android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+                android:hint="0" android:inputType="numberDecimal"
+                android:paddingStart="10dp" android:paddingEnd="10dp" android:textSize="14sp"/>
+        </LinearLayout>
+
+        <!-- ── Notes (all types) ── -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Notes" android:textSize="12sp" android:textColor="@color/colorTextSecondary"/>
+        <EditText android:id="@+id/etNotes"
+            android:layout_width="match_parent" android:layout_height="80dp"
+            android:layout_marginTop="4dp" android:background="@drawable/bg_input_field"
+            android:gravity="top|start" android:hint="Add notes…"
+            android:inputType="textMultiLine" android:padding="10dp"
+            android:scrollbars="vertical" android:textSize="14sp"/>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

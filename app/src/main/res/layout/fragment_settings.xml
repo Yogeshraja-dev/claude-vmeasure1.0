@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:orientation="vertical">
+
+    <!-- Header -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/colorSurface"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:text="@string/title_settings"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorOnSurface" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- Account card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp">
+                <LinearLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="16dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Google Account" android:textSize="13sp"
+                        android:textColor="@color/colorTextSecondary"/>
+                    <TextView android:id="@+id/tvAccountEmail"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Not signed in" android:textSize="15sp"
+                        android:textColor="@color/colorOnSurface" android:layout_marginTop="4dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Last synced" android:textSize="13sp"
+                        android:textColor="@color/colorTextSecondary" android:layout_marginTop="12dp"/>
+                    <TextView android:id="@+id/tvLastSync"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Never synced" android:textSize="15sp"
+                        android:textColor="@color/colorOnSurface" android:layout_marginTop="4dp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Sync button -->
+            <Button
+                android:id="@+id/btnSync"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_primary_button"
+                android:text="@string/btn_sync"
+                android:textColor="@color/colorOnPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <!-- Status message -->
+            <TextView
+                android:id="@+id/tvStatusMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>
