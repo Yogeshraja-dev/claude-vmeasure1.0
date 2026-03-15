@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="spacing_xs">4dp</dimen>
+    <dimen name="spacing_sm">8dp</dimen>
+    <dimen name="spacing_md">16dp</dimen>
+    <dimen name="spacing_lg">24dp</dimen>
+    <dimen name="spacing_xl">32dp</dimen>
+
+    <dimen name="card_radius">12dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
+    <dimen name="input_radius">8dp</dimen>
+    <dimen name="button_radius">10dp</dimen>
+    <dimen name="button_height">52dp</dimen>
+    <dimen name="fab_margin">20dp</dimen>
+
+    <dimen name="text_sm">12sp</dimen>
+    <dimen name="text_md">14sp</dimen>
+    <dimen name="text_lg">16sp</dimen>
+    <dimen name="text_xl">20sp</dimen>
+
+    <dimen name="bottom_nav_height">64dp</dimen>
+    <dimen name="header_height">56dp</dimen>
+    <dimen name="user_card_min_height">80dp</dimen>
+
+    <!-- Tablet -->
+    <dimen name="tablet_list_width">360dp</dimen>
+</resources>

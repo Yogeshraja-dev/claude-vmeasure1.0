@@ -1,5 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="Theme.Vmeasure" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorError">@color/colorError</item>
+        <item name="android:statusBarColor">@color/colorSurface</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
 
-    <style name="Theme.Vmeasure" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="TagChip" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="android:textSize">13sp</item>
+        <item name="chipBackgroundColor">@color/colorTagBackground</item>
+        <item name="chipStrokeColor">@color/colorDivider</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="android:textColor">@color/colorTagText</item>
+        <item name="chipCornerRadius">20dp</item>
+    </style>
+
+    <style name="TagChipSelected" parent="TagChip">
+        <item name="chipBackgroundColor">@color/colorTagSelected</item>
+        <item name="android:textColor">@color/colorTagTextSelected</item>
+        <item name="chipStrokeColor">@color/colorTagSelected</item>
+    </style>
+
+    <style name="SectionCard" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/colorSurface</item>
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">2dp</item>
+        <item name="contentPadding">16dp</item>
+    </style>
+
+    <style name="InputField" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusTopStart">8dp</item>
+        <item name="boxCornerRadiusTopEnd">8dp</item>
+        <item name="boxCornerRadiusBottomStart">8dp</item>
+        <item name="boxCornerRadiusBottomEnd">8dp</item>
+        <item name="boxStrokeColor">@color/colorDivider</item>
+        <item name="hintTextColor">@color/colorTextSecondary</item>
+    </style>
+
+    <style name="PrimaryButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorOnPrimary</item>
+        <item name="cornerRadius">10dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<resources>-->
+
+<!--    <style name="Theme.Vmeasure" parent="android:Theme.Material.Light.NoActionBar" />-->
+<!--</resources>-->

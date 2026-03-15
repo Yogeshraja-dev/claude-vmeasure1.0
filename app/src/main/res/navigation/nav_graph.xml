@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/listsFragment">
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.vmeasure.app.ui.settings.SettingsFragment"
+        android:label="Settings" />
+
+    <fragment
+        android:id="@+id/listsFragment"
+        android:name="com.vmeasure.app.ui.lists.ListsFragment"
+        android:label="Lists">
+        <action
+            android:id="@+id/action_lists_to_addEdit"
+            app:destination="@id/addEditFragment" />
+        <action
+            android:id="@+id/action_lists_to_detail"
+            app:destination="@id/detailFragment">
+            <argument
+                android:name="userId"
+                app:argType="string" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.vmeasure.app.ui.calendar.CalendarFragment"
+        android:label="Calendar" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.vmeasure.app.ui.profile.ProfileFragment"
+        android:label="Profile" />
+
+    <fragment
+        android:id="@+id/addEditFragment"
+        android:name="com.vmeasure.app.ui.addedit.AddEditFragment"
+        android:label="Add New User" />
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.vmeasure.app.ui.detail.DetailFragment"
+        android:label="Details">
+        <argument
+            android:name="userId"
+            app:argType="string" />
+    </fragment>
+
+</navigation>
