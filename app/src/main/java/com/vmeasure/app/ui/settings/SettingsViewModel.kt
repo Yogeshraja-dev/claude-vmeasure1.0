@@ -2,6 +2,7 @@ package com.vmeasure.app.ui.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.vmeasure.app.data.repository.DriveTokenManager
 import com.vmeasure.app.data.repository.SyncRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val syncRepository: SyncRepository
+    private val syncRepository: SyncRepository,
+    private val driveTokenManager: DriveTokenManager
 ) : ViewModel() {
 
     data class UiState(
@@ -35,8 +37,12 @@ class SettingsViewModel @Inject constructor(
     private val _events = MutableStateFlow<Event?>(null)
     val events: StateFlow<Event?> = _events.asStateFlow()
 
-    // Whether conflict was acknowledged by user
+    // Tracks whether user acknowledged the conflict warning dialog
     private var conflictAcknowledged = false
+    // Stored temporarily during sign-in flow
+    private var pendingServerAuthCode: String = ""
+    private var pendingClientId: String = ""
+    private var pendingClientSecret: String = ""
 
     // ── Init ──────────────────────────────────────────────────────────────────
 
@@ -47,36 +53,60 @@ class SettingsViewModel @Inject constructor(
     fun loadStatus() {
         viewModelScope.launch {
             val isSignedIn = syncRepository.isSignedIn()
-            val email = syncRepository.getStoredEmail() ?: ""
-            val lastSync = syncRepository.getLastSyncTime() ?: ""
+            val email      = syncRepository.getStoredEmail() ?: ""
+            val lastSync   = syncRepository.getLastSyncTime() ?: ""
             _uiState.value = _uiState.value.copy(
-                isSignedIn = isSignedIn,
+                isSignedIn   = isSignedIn,
                 accountEmail = email,
                 lastSyncTime = lastSync
             )
         }
     }
 
-    // ── Google Sign-In result ─────────────────────────────────────────────────
+    // ── Called when Google Sign-In returns a server auth code ─────────────────
 
-    fun onSignInSuccess(email: String, token: String) {
+    fun onSignInSuccess(
+        email: String,
+        serverAuthCode: String,
+        clientId: String,
+        clientSecret: String
+    ) {
         viewModelScope.launch {
-            syncRepository.storeAccountInfo(email, token)
-            _uiState.value = _uiState.value.copy(
-                isSignedIn = true,
-                accountEmail = email
+            _uiState.value = _uiState.value.copy(isLoading = true)
+            // Exchange server auth code for tokens
+            val tokenResult = driveTokenManager.storeTokensFromAuthCode(
+                serverAuthCode, clientId, clientSecret
             )
+            if (tokenResult.isSuccess) {
+                syncRepository.storeAccountInfo(email, tokenResult.getOrDefault(""))
+                _uiState.value = _uiState.value.copy(
+                    isLoading    = false,
+                    isSignedIn   = true,
+                    accountEmail = email
+                )
+            } else {
+                // Store email even if token exchange failed — retry on next sync
+                syncRepository.storeAccountInfo(email, "")
+                _uiState.value = _uiState.value.copy(
+                    isLoading    = false,
+                    isSignedIn   = true,
+                    accountEmail = email,
+                    error        = "Signed in but Drive access needs re-authorisation. Tap Sync to retry."
+                )
+            }
         }
     }
 
-    // ── Sync ──────────────────────────────────────────────────────────────────
+    // ── Sync tap ──────────────────────────────────────────────────────────────
 
-    fun onSyncTapped() {
+    fun onSyncTapped(clientId: String, clientSecret: String) {
         if (!_uiState.value.isSignedIn) {
             _events.value = Event.RequestSignIn
             return
         }
         conflictAcknowledged = false
+        pendingClientId      = clientId
+        pendingClientSecret  = clientSecret
         startSync()
     }
 
@@ -87,58 +117,65 @@ class SettingsViewModel @Inject constructor(
     private fun startSync() {
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(
-                isLoading = true,
-                error = null,
+                isLoading      = true,
+                error          = null,
                 successMessage = null
             )
-            val token = syncRepository.getStoredToken() ?: run {
+
+            // Get a valid access token (auto-refresh if expired)
+            val tokenResult = driveTokenManager.getValidAccessToken(
+                pendingClientId, pendingClientSecret
+            )
+
+            if (tokenResult.isFailure) {
                 _uiState.value = _uiState.value.copy(
                     isLoading = false,
-                    error = "Please sign in again"
+                    error     = "Authentication expired. Please sign in again."
                 )
+                _events.value = Event.RequestSignIn
                 return@launch
             }
 
-            val result = syncRepository.performSync(
-                token = token,
+            val accessToken = tokenResult.getOrThrow()
+
+            val syncResult = syncRepository.performSync(
+                token      = accessToken,
                 onConflict = {
-                    // Signal UI to show dialog and wait for user response
                     _events.value = Event.RequestSyncConflictWarning
-                    // Wait for user decision (max 30s)
+                    // Wait up to 30 seconds for user to respond
                     var waited = 0
-                    while (!conflictAcknowledged && waited < 30000) {
-                        kotlinx.coroutines.delay(100)
-                        waited += 100
+                    while (!conflictAcknowledged && waited < 30_000) {
+                        kotlinx.coroutines.delay(150)
+                        waited += 150
                     }
                     conflictAcknowledged
                 }
             )
 
-            _uiState.value = if (result.isSuccess) {
+            _uiState.value = if (syncResult.isSuccess) {
                 _uiState.value.copy(
-                    isLoading = false,
+                    isLoading      = false,
                     successMessage = "Sync completed successfully",
-                    lastSyncTime = syncRepository.getLastSyncTime() ?: ""
+                    lastSyncTime   = syncRepository.getLastSyncTime() ?: ""
                 )
             } else {
                 _uiState.value.copy(
                     isLoading = false,
-                    error = "Sync failed: ${result.exceptionOrNull()?.message}"
+                    error     = "Sync failed: ${syncResult.exceptionOrNull()?.message}"
                 )
             }
         }
     }
 
+    // ── State helpers ─────────────────────────────────────────────────────────
+
     fun clearState() {
-        _uiState.value = _uiState.value.copy(
-            error = null,
-            successMessage = null
-        )
-        _events.value = null
+        _uiState.value = _uiState.value.copy(error = null, successMessage = null)
+        _events.value  = null
         loadStatus()
     }
 
-    fun clearEvent() { _events.value = null }
-    fun clearError() { _uiState.value = _uiState.value.copy(error = null) }
+    fun clearEvent()   { _events.value = null }
+    fun clearError()   { _uiState.value = _uiState.value.copy(error = null) }
     fun clearSuccess() { _uiState.value = _uiState.value.copy(successMessage = null) }
 }

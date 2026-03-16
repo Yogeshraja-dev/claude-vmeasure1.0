@@ -151,6 +151,9 @@
     <string name="field_pant_length">Pant Length</string>
     <string name="field_pant_waist">Pant Waist</string>
     <string name="google_client_id">YOUR_GOOGLE_CLIENT_ID_HERE</string>
+    <!-- Replace these with your actual values from Google Cloud Console -->
+<!--    <string name="google_client_id">YOUR_WEB_CLIENT_ID.apps.googleusercontent.com</string>-->
+    <string name="google_client_secret">YOUR_CLIENT_SECRET</string>
 </resources>
 
     <!--<resources>-->

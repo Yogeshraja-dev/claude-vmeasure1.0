@@ -4,9 +4,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigationrail.NavigationRailView
 import com.vmeasure.app.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,46 +23,79 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setupNavigation()
     }
 
-    // ── Navigation setup ──────────────────────────────────────────────────────
+    // ── Navigation ────────────────────────────────────────────────────────────
 
     private fun setupNavigation() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.navHostFragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        // Wire bottom nav to nav controller
-        binding.bottomNavigationView.setupWithNavController(navController)
+        // The same view id is used in both layouts but the type differs.
+        // Find the view at runtime and cast accordingly.
+        val navViewRaw = binding.root.findViewById<View>(R.id.bottomNavigationView)
 
-        // Control bottom nav visibility — hide on sub-screens
+        when (navViewRaw) {
+
+            // ── Phone: BottomNavigationView ───────────────────────────────────
+            is BottomNavigationView -> {
+                navViewRaw.setupWithNavController(navController)
+
+                navViewRaw.setOnItemSelectedListener { item ->
+                    clearTabState(navController.currentDestination?.id)
+                    navController.navigate(item.itemId)
+                    true
+                }
+                navViewRaw.setOnItemReselectedListener { /* consume */ }
+            }
+
+            // ── Tablet: NavigationRailView ────────────────────────────────────
+            is NavigationRailView -> {
+                navViewRaw.setupWithNavController(navController)
+
+                navViewRaw.setOnItemSelectedListener { item ->
+                    clearTabState(navController.currentDestination?.id)
+                    navController.navigate(item.itemId)
+                    true
+                }
+                navViewRaw.setOnItemReselectedListener { /* consume */ }
+            }
+        }
+
+        // Hide bottom/rail nav on sub-screens
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.addEditFragment,
                 R.id.detailFragment -> hideBottomNav()
-                else -> showBottomNav()
+                else                -> showBottomNav()
             }
         }
-
-        // When the user taps a bottom nav item that is already selected,
-        // pop back to the start destination of that tab (standard UX)
-        binding.bottomNavigationView.setOnItemReselectedListener { /* consume — no action */ }
     }
 
-    // ── Bottom nav visibility ─────────────────────────────────────────────────
+    // ── Clear tab state when switching tabs ───────────────────────────────────
 
-    private fun showBottomNav() {
-        binding.bottomNavigationView.visibility = View.VISIBLE
+    private fun clearTabState(leavingDestinationId: Int?) {
+        // ViewModels handle their own state clearing via clearState().
+        // This hook is here for any future fragment-level cleanup needed.
+        when (leavingDestinationId) {
+            R.id.listsFragment    -> { /* ListsViewModel.clearState() called in onDestroyView */ }
+            R.id.settingsFragment -> { /* SettingsViewModel.clearState() called in onDestroyView */ }
+        }
     }
 
-    private fun hideBottomNav() {
-        binding.bottomNavigationView.visibility = View.GONE
+    // ── Nav visibility ────────────────────────────────────────────────────────
+
+    fun showBottomNav() {
+        binding.root.findViewById<View>(R.id.bottomNavigationView)?.visibility = View.VISIBLE
+    }
+
+    fun hideBottomNav() {
+        binding.root.findViewById<View>(R.id.bottomNavigationView)?.visibility = View.GONE
     }
 
     // ── Global full-screen loader ─────────────────────────────────────────────
-    // Call showLoader() / hideLoader() from any Fragment via (activity as MainActivity)
 
     fun showLoader() {
         binding.loaderOverlay.visibility = View.VISIBLE
@@ -71,63 +105,13 @@ class MainActivity : AppCompatActivity() {
         binding.loaderOverlay.visibility = View.GONE
     }
 
-    // ── Back press handling ───────────────────────────────────────────────────
+    // ── Back press ────────────────────────────────────────────────────────────
 
-//    @Deprecated("Using OnBackPressedDispatcher is preferred in fragments; " +
-//            "this override handles the activity-level fallback.")
+//    @Deprecated("Use OnBackPressedDispatcher in Fragments")
 //    override fun onBackPressed() {
-//        // If the nav controller can go back, let it handle it
 //        if (!navController.navigateUp()) {
+//            @Suppress("DEPRECATION")
 //            super.onBackPressed()
 //        }
 //    }
 }
-
-
-//package com.vmeasure.app
-//
-//import android.os.Bundle
-//import androidx.activity.ComponentActivity
-////import androidx.activity.compose.setContent
-//import androidx.activity.enableEdgeToEdge
-////import androidx.compose.foundation.layout.fillMaxSize
-////import androidx.compose.foundation.layout.padding
-////import androidx.compose.material3.Scaffold
-////import androidx.compose.material3.Text
-////import androidx.compose.runtime.Composable
-////import androidx.compose.ui.Modifier
-////import androidx.compose.ui.tooling.preview.Preview
-////import com.vmeasure.app.ui.theme.VmeasureTheme
-//
-//class MainActivity : ComponentActivity() {
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        enableEdgeToEdge()
-////        setContent {
-////            VmeasureTheme {
-////                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-////                    Greeting(
-////                        name = "Android",
-////                        modifier = Modifier.padding(innerPadding)
-////                    )
-////                }
-////            }
-////        }
-//    }
-//}
-//
-////@Composable
-////fun Greeting(name: String, modifier: Modifier = Modifier) {
-////    Text(
-////        text = "Hello test user $name!",
-////        modifier = modifier
-////    )
-////}
-//
-////@Preview(showBackground = true)
-////@Composable
-////fun GreetingPreview() {
-////    VmeasureTheme {
-////        Greeting("Android")
-////    }
-////}

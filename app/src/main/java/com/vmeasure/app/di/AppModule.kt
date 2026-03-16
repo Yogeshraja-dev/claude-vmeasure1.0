@@ -6,6 +6,7 @@ import com.vmeasure.app.data.db.dao.AppConfigDao
 import com.vmeasure.app.data.db.dao.DeletedUserIdDao
 import com.vmeasure.app.data.db.dao.SectionDao
 import com.vmeasure.app.data.db.dao.UserDao
+import com.vmeasure.app.data.repository.DriveTokenManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,7 +41,15 @@ object AppModule {
     @Singleton
     fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(30, TimeUnit.SECONDS)
-        .readTimeout(30, TimeUnit.SECONDS)
-        .writeTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(60, TimeUnit.SECONDS)
+        .writeTimeout(60, TimeUnit.SECONDS)
         .build()
+
+    @Provides
+    @Singleton
+    fun provideDriveTokenManager(
+        @ApplicationContext context: Context,
+        appConfigDao: AppConfigDao,
+        okHttpClient: OkHttpClient
+    ): DriveTokenManager = DriveTokenManager(context, appConfigDao, okHttpClient)
 }

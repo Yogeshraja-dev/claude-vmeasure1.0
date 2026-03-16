@@ -15,7 +15,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.Scope
@@ -35,6 +34,7 @@ class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: SettingsViewModel by viewModels()
+
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var signInLauncher: ActivityResultLauncher<Intent>
 
@@ -53,7 +53,9 @@ class SettingsFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         return binding.root
@@ -72,25 +74,29 @@ class SettingsFragment : Fragment() {
         _binding = null
     }
 
-    // ── Google Sign In setup ──────────────────────────────────────────────────
+    // ── Google Sign-In setup ──────────────────────────────────────────────────
 
     private fun setupGoogleSignIn() {
+        val clientId = getString(R.string.google_client_id)
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
             .requestScopes(Scope("https://www.googleapis.com/auth/drive.file"))
-            .requestServerAuthCode(getString(R.string.google_client_id), true)
+            .requestServerAuthCode(clientId, true)
             .build()
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
     }
 
     private fun handleSignInResult(data: Intent?) {
         try {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            val account: GoogleSignInAccount = task.result
-            val email = account.email ?: ""
-            // Use the server auth code as token for Drive API calls
-            val token = account.serverAuthCode ?: ""
-            viewModel.onSignInSuccess(email, token)
+            val task    = GoogleSignIn.getSignedInAccountFromIntent(data)
+            val account = task.result
+            val email      = account.email ?: ""
+            val authCode   = account.serverAuthCode ?: ""
+            val clientId   = getString(R.string.google_client_id)
+            val clientSecret = getString(R.string.google_client_secret)
+
+            viewModel.onSignInSuccess(email, authCode, clientId, clientSecret)
+
         } catch (e: Exception) {
             requireContext().toast("Sign in failed: ${e.message}")
         }
@@ -100,6 +106,7 @@ class SettingsFragment : Fragment() {
 
     private fun setupListeners() {
         binding.btnSync.setOnClickListener {
+            // Check internet first
             if (!NetworkUtils.isConnected(requireContext())) {
                 AlertDialog.Builder(requireContext())
                     .setTitle(R.string.dialog_no_internet_title)
@@ -108,7 +115,9 @@ class SettingsFragment : Fragment() {
                     .show()
                 return@setOnClickListener
             }
-            viewModel.onSyncTapped()
+            val clientId     = getString(R.string.google_client_id)
+            val clientSecret = getString(R.string.google_client_secret)
+            viewModel.onSyncTapped(clientId, clientSecret)
         }
     }
 
@@ -118,19 +127,23 @@ class SettingsFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { state ->
+
+                    // Full-screen loader
                     if (state.isLoading) (activity as? MainActivity)?.showLoader()
                     else (activity as? MainActivity)?.hideLoader()
 
+                    // Account info
                     binding.tvAccountEmail.text =
                         if (state.isSignedIn && state.accountEmail.isNotBlank())
                             state.accountEmail
                         else getString(R.string.msg_sign_in_required)
 
+                    // Last sync
                     binding.tvLastSync.text =
                         if (state.lastSyncTime.isNotBlank()) state.lastSyncTime
                         else getString(R.string.label_never_synced)
 
-                    // Status message
+                    // Success message
                     if (state.successMessage != null) {
                         binding.tvStatusMessage.text = state.successMessage
                         binding.tvStatusMessage.setTextColor(
@@ -138,7 +151,10 @@ class SettingsFragment : Fragment() {
                         )
                         binding.tvStatusMessage.show()
                         viewModel.clearSuccess()
-                    } else if (state.error != null) {
+                    }
+
+                    // Error message
+                    if (state.error != null) {
                         binding.tvStatusMessage.text = state.error
                         binding.tvStatusMessage.setTextColor(
                             requireContext().getColor(R.color.colorError)
@@ -158,10 +174,12 @@ class SettingsFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.events.collect { event ->
                     when (event) {
+
                         is SettingsViewModel.Event.RequestSignIn -> {
                             signInLauncher.launch(googleSignInClient.signInIntent)
                             viewModel.clearEvent()
                         }
+
                         is SettingsViewModel.Event.RequestSyncConflictWarning -> {
                             AlertDialog.Builder(requireContext())
                                 .setTitle(R.string.dialog_sync_warn_title)
@@ -174,7 +192,8 @@ class SettingsFragment : Fragment() {
                                 .show()
                             viewModel.clearEvent()
                         }
-                        null -> {}
+
+                        null -> { /* no-op */ }
                     }
                 }
             }
